@@ -12,10 +12,11 @@ export default class DeckDetail extends Component{
       <View style={styles.deck}>
         {console.log('props', params)}
         {console.log('detail deck', params.deck)}
+        {console.log('detail deck title', params.deck.title)}
         <DeckHeader title={params.deck.title} />
         <Text style={styles.decktitle}>{`${params.deck.questions.length} cards`}</Text>
-        <TextButton label={"Add Card"} onPress={() => this.props.navigation.navigate('NewCard', {deck: params.deck.title})}/>
-        <TextButton label={"Start Quiz"}/>
+        <TextButton label={"Add Card"} onPress={() => this.props.navigation.navigate('NewCard', {deckTitle: params.deck.title})}/>
+        <TextButton label={"Start Quiz"} onPress={() => this.props.navigation.navigate('Quiz', {deckTitle: params.deck.title})}/>
       </View>
     )
   }

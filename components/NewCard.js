@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet, TextInput, Button } from 'react-native'
-import { saveDeckTitle } from '../utils/helpers'
+import { addCardToDeck } from '../utils/helpers'
 import { orange } from '../utils/colors'
 
 export default class NewCard extends Component{
@@ -10,7 +10,7 @@ export default class NewCard extends Component{
   }
 
   addNewCard = (deck, card) => {
-    saveDeckTitle(deckTitle)
+    addCardToDeck(deck)
     this.setState({
       question : 'Enter Question',
       answer: 'Enter Answer'

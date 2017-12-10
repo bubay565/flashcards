@@ -13,7 +13,6 @@ export default class DeckList extends Component {
         <DeckHeader title={'FlashCards'} />
         {Object.keys(deckSummary).map((deck, index) =>
           <View style={styles.deck} key={index}>
-            {console.log('hey deck ',getDeck(deck))}
             <TouchableOpacity onPress={() => this.props.navigation.navigate('DeckDetail', {deck: getDeck(deck)})}>
               <Text style={styles.decktitle}>{`${deck}`}</Text>
             </TouchableOpacity>

@@ -7,11 +7,13 @@ let appData = {
     questions: [
       {
         question: 'What is React?',
-        answer: 'A library for managing user interfaces'
+        explanation: 'A library for managing user interfaces',
+        answer: 'correct'
       },
       {
         question: 'Where do you make Ajax requests in React?',
-        answer: 'The componentDidMount lifecycle event'
+        explanation: 'The componentDidMount lifecycle event',
+        answer: 'incorrect'
       }
     ]
   },
@@ -20,7 +22,8 @@ let appData = {
     questions: [
       {
         question: 'What is a closure?',
-        answer: 'The combination of a function and the lexical environment within which that function was declared.'
+        explanation: 'The combination of a function and the lexical environment within which that function was declared.',
+        answer: 'correct'
       }
     ]
   },
@@ -29,7 +32,8 @@ let appData = {
     questions: [
       {
         question: 'What is the main benefit of Redux?',
-        answer: 'It makes state predictable thus enabling easy bug detection and fixing.'
+        explanation: 'It makes state predictable thus enabling easy bug detection and fixing.',
+        answer: 'incorrect'
       }
     ]
   }
@@ -52,7 +56,7 @@ export const saveDeckTitle = (deck) => (
   }))
 )
 
-const addCardToDeck = (title, card) => {
+export const addCardToDeck = (title, card) => {
   appData.title.questions.concat(card);
 }
 

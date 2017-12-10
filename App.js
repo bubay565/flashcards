@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, StyleSheet } from 'react-native'
 import DeckList from './components/DeckList'
 import DeckDetail from './components/DeckDetail'
+import Quiz from './components/Quiz'
 import NewCard from './components/NewCard'
 import { StackNavigator } from 'react-navigation'
 import { white } from './utils/colors'
@@ -33,6 +34,12 @@ const Stacks = StackNavigator({
     screen: NewCard,
     navigationOptions: {
       headerTitle: 'Add Card'
+    }
+  },
+  Quiz: {
+    screen: Quiz,
+    navigationOptions: {
+      headerTitle: 'Quiz'
     }
   }
 });
