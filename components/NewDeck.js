@@ -8,6 +8,12 @@ export default class NewDeck extends Component{
     deckTitle : 'Enter Deck Title'
   }
 
+  /*static navigationOptions = ({ navigation }) => {
+    return {
+      title: `Create new deck`,
+    }
+  };*/
+
   addNewDeck = (deckTitle) => {
     saveDeckTitle(deckTitle)
     this.setState({deckTitle : 'Enter Deck Title'})

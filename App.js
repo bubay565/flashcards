@@ -1,11 +1,28 @@
 import React, { Component } from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, Text } from 'react-native'
 import DeckList from './components/DeckList'
 import DeckDetail from './components/DeckDetail'
 import Quiz from './components/Quiz'
 import NewCard from './components/NewCard'
-import { StackNavigator } from 'react-navigation'
-import { white } from './utils/colors'
+import NewDeck from './components/NewDeck'
+import { StackNavigator, TabNavigator } from 'react-navigation'
+import { white, lightPurp } from './utils/colors'
+
+const MainScreenNavigator = TabNavigator({
+  Decks: {screen: DeckList},
+  'New Deck': {
+    screen: NewDeck
+  }
+}, {
+  tabBarOptions: {
+    activeTintColor: lightPurp,
+    labelStyle: {
+      fontSize: 20,
+      fontWeight: '600'
+    }
+  }
+})
+
 
 export default class App extends Component {
   render() {
@@ -19,7 +36,7 @@ export default class App extends Component {
 
 const Stacks = StackNavigator({
   Home: {
-    screen: DeckList,
+    screen: MainScreenNavigator,
     navigationOptions: {
       headerTitle: 'Home',
     }
