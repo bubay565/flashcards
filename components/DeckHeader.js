@@ -1,10 +1,10 @@
 import React from 'react'
 import { Text } from 'react-native'
-import { purple } from '../utils/colors'
+import * as colours from '../utils/colors'
 
-export default function DeckHeader({ title }) {
+export default function DeckHeader({ title, colour }) {
   return(
-    <Text style={{color: purple, fontSize: 45, fontWeight: 'bold', alignSelf: 'center'}}>
+    <Text style={{color: colours[colour], fontSize: 50, fontWeight: 'bold', alignSelf: 'center'}}>
       {title}
     </Text>
   )

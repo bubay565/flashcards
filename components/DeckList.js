@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native'
 import { getDeck, getDeckSummary } from '../utils/helpers'
 import { gray, red, lightPurp, white } from '../utils/colors'
 import DeckHeader from './DeckHeader'
@@ -9,8 +9,8 @@ export default class DeckList extends Component {
     const deckSummary = getDeckSummary();
     console.log('decks ', deckSummary);
     return (
-      <View style={styles.decklist}>
-        <DeckHeader title={'FlashCards'} />
+      <ScrollView style={styles.decklist}>
+        <DeckHeader title={'FlashCards'} colour={'purple'}/>
         {Object.keys(deckSummary).map((deck, index) =>
           <View style={styles.deck} key={index}>
             <TouchableOpacity onPress={() => this.props.navigation.navigate('DeckDetail', {deck: getDeck(deck)})}>
@@ -19,7 +19,7 @@ export default class DeckList extends Component {
             <Text style={styles.textStyle}>{`${deckSummary[deck]} cards`}</Text>
           </View>
         )}
-      </View>
+      </ScrollView>
     )
   }
 }
@@ -27,7 +27,8 @@ export default class DeckList extends Component {
 const styles = StyleSheet.create({
   decklist: {
     backgroundColor: white,
-    flex: 1
+    flex: 1,
+    overflow: 'scroll'
   },
   decktitle: {
     color: red,
@@ -44,6 +45,7 @@ const styles = StyleSheet.create({
     borderBottomColor:lightPurp,
     borderBottomWidth: 1,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    minHeight: 200
   }
 });

@@ -36,6 +36,26 @@ let appData = {
         answer: 'incorrect'
       }
     ]
+  },
+  GraphQl: {
+    title: 'Redux',
+    questions: [
+      {
+        question: 'What is the main benefit of Redux?',
+        explanation: 'It makes state predictable thus enabling easy bug detection and fixing.',
+        answer: 'incorrect'
+      }
+    ]
+  },
+  VueJs: {
+    title: 'Redux',
+    questions: [
+      {
+        question: 'What is the main benefit of Redux?',
+        explanation: 'It makes state predictable thus enabling easy bug detection and fixing.',
+        answer: 'incorrect'
+      }
+    ]
   }
 }
 

@@ -20,6 +20,17 @@ export default class Quiz extends Component {
     })
   }
 
+  resetState = () => {
+    this.setState({
+      score : 0,
+      indexCount : 0
+    })
+  }
+
+  quizReturn = () => {
+    this.props.navigation.navigate('DeckDetail', {deck: getDeck(this.props.navigation.state.params.deckTitle)})
+  }
+
   generateTotalScore = () => {
     return Math.round((this.state.score / this.state.indexCount) * 100)
   }
@@ -34,6 +45,8 @@ export default class Quiz extends Component {
      return (
         <QuizComplete
           score={this.generateTotalScore()}
+          onReset={() => this.resetState()}
+          onReturn={() => this.quizReturn()}
         />
       )}
      return (
@@ -42,6 +55,8 @@ export default class Quiz extends Component {
             answer={card[this.state.indexCount].answer}
             explanation={card[this.state.indexCount].explanation}
             updateState={this.updateState}
+            questionNum={this.state.indexCount + 1}
+            numQuestions={card.length}
         />
       )
   }
