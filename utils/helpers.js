@@ -1,5 +1,5 @@
 import { AsyncStorage } from 'react-native'
-const DECK_STORAGE_KEY = 'UdaciCards:deck'
+const DECK_STORAGE_KEY = 'deck'
 
 let appData = {
   React: {
@@ -59,7 +59,13 @@ let appData = {
   }
 }
 
+export const initialiseAppData = () => {
+    AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(appData));
+    console.log('done initialising data storage..');
+}
+
 export const getDecks = () => {
+  //AsyncStorage.getIt
   return appData
 }
 
@@ -81,10 +87,15 @@ export const addCardToDeck = (title, card) => {
 }
 
 export const getDeckSummary = () => {
-  let keys = Object.keys(appData);
-  let res = {};
-  keys.forEach((key) => {
-     res[key] = appData[key].questions.length;
-    });
-  return res;
+  AsyncStorage.getItem(DECK_STORAGE_KEY)
+  .then((result) => {
+    const data = JSON.parse(result);
+    let keys = Object.keys(data);
+    let res = {};
+    keys.forEach((key) => {
+       res[key] = data[key].questions.length;
+     })
+     console.log('res: ', res)
+    return res;
+  })
 }

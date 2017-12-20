@@ -9,7 +9,9 @@ import { StackNavigator, TabNavigator } from 'react-navigation'
 import { white, lightPurp } from './utils/colors'
 
 const MainScreenNavigator = TabNavigator({
-  Decks: {screen: DeckList},
+  Decks: {
+    screen: DeckList
+  },
   'New Deck': {
     screen: NewDeck
   }

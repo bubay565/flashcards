@@ -1,13 +1,41 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native'
-import { getDeck, getDeckSummary } from '../utils/helpers'
+import { getDeck, getDeckSummary, initialiseAppData } from '../utils/helpers'
 import { gray, red, lightPurp, white } from '../utils/colors'
 import DeckHeader from './DeckHeader'
+import { AppLoading } from 'expo'
 
 export default class DeckList extends Component {
+  constructor(props){
+    super(props);
+    initialiseAppData();
+  }
+
+  componentDidMount(){
+    getDeckSummary()
+    .then((deckSummary) => {
+      console.log('decks ', deckSummary);
+      this.setState({
+        ready: true,
+        deckSummary
+      })
+    })
+  }
+
+  state = {
+    deckSummary: {},
+    ready: false
+  }
+
   render() {
-    const deckSummary = getDeckSummary();
-    console.log('decks ', deckSummary);
+    const { deckSummary, ready } = this.state;
+    console.log('ready', ready)
+    console.log('deckSummary ', deckSummary)
+
+    if(ready === false){
+      return <AppLoading />
+    }
+
     return (
       <ScrollView style={styles.decklist}>
         <DeckHeader title={'FlashCards'} colour={'purple'}/>
