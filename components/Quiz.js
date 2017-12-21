@@ -28,7 +28,7 @@ export default class Quiz extends Component {
   }
 
   quizReturn = () => {
-    this.props.navigation.navigate('DeckDetail', {deck: getDeck(this.props.navigation.state.params.deckTitle)})
+    this.props.navigation.goBack()
   }
 
   generateTotalScore = () => {
