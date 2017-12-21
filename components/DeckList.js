@@ -11,15 +11,17 @@ export default class DeckList extends Component {
     initialiseAppData();
   }
 
-  componentDidMount(){
-    getDeckSummary()
-    .then((deckSummary) => {
-      console.log('decks ', deckSummary);
+  async componentDidMount(){
+    try {
+      const deckSummary = await getDeckSummary()
       this.setState({
         ready: true,
         deckSummary
       })
-    })
+    }
+    catch(err){
+      console.log(err)
+    }
   }
 
   state = {

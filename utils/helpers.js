@@ -37,7 +37,7 @@ let appData = {
       }
     ]
   },
-  GraphQl: {
+  GraphQL: {
     title: 'Redux',
     questions: [
       {
@@ -59,8 +59,8 @@ let appData = {
   }
 }
 
-export const initialiseAppData = () => {
-    AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(appData));
+export const initialiseAppData = async () => {
+    await AsyncStorage.setItem(DECK_STORAGE_KEY, JSON.stringify(appData));
     console.log('done initialising data storage..');
 }
 
@@ -73,23 +73,23 @@ export const getDeck = (deck) => {
   return appData.hasOwnProperty(deck) ? appData[deck] : 'null'
 }
 
-export const saveDeckTitle = (deck) => (
-  AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify({
+export const saveDeckTitle = async (deck) => {
+  console.log('saving :', deck)
+  await AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify({
     [deck] : {
       title: deck,
       questions: []
     }
   }))
-)
+  console.log(JSON.parse( await AsyncStorage.getItem(DECK_STORAGE_KEY)))
+}
 
 export const addCardToDeck = (title, card) => {
   appData.title.questions.concat(card);
 }
 
-export const getDeckSummary = () => {
-  AsyncStorage.getItem(DECK_STORAGE_KEY)
-  .then((result) => {
-    const data = JSON.parse(result);
+export const getDeckSummary = async () => {
+    const data = JSON.parse( await AsyncStorage.getItem(DECK_STORAGE_KEY));
     let keys = Object.keys(data);
     let res = {};
     keys.forEach((key) => {
@@ -97,5 +97,4 @@ export const getDeckSummary = () => {
      })
      console.log('res: ', res)
     return res;
-  })
 }
