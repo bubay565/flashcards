@@ -69,8 +69,9 @@ export const getDecks = () => {
   return appData
 }
 
-export const getDeck = (deck) => {
-  return appData.hasOwnProperty(deck) ? appData[deck] : 'null'
+export const getDeck = async (deck) => {
+  const data = JSON.parse( await AsyncStorage.getItem(DECK_STORAGE_KEY));
+  return data.hasOwnProperty(deck) ? data[deck] : 'null'
 }
 
 export const saveDeckTitle = async (deck) => {

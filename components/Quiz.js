@@ -36,9 +36,9 @@ export default class Quiz extends Component {
   }
 
   render(){
-    const deckTitle = this.props.navigation.state.params.deckTitle;
-    const card = getDeck(deckTitle).questions;
-    console.log('Quiz title ', deckTitle)
+    const { deck } = this.props.navigation.state.params;
+    const card = deck.questions;
+    console.log('Quiz title ', deck.title)
     console.log('index ', this.state.indexCount)
 
     if(this.state.indexCount === card.length){

@@ -1,17 +1,22 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native'
-import { getDeck, getDeckSummary, initialiseAppData } from '../utils/helpers'
+import { getDeckSummary, initialiseAppData } from '../actions'
 import { gray, red, lightPurp, white } from '../utils/colors'
 import DeckHeader from './DeckHeader'
 import { AppLoading } from 'expo'
 
-export default class DeckList extends Component {
+class DeckList extends Component {
   constructor(props){
     super(props);
-    initialiseAppData();
+    this.props.dispatch(initialiseAppData());
   }
 
-  async componentDidMount(){
+  componentDidMount() {
+    this.props.dispatch(getDeckSummary());
+  }
+
+  /*async componentDidMount(){
     try {
       const deckSummary = await getDeckSummary()
       this.setState({
@@ -22,19 +27,14 @@ export default class DeckList extends Component {
     catch(err){
       console.log(err)
     }
-  }
-
-  state = {
-    deckSummary: {},
-    ready: false
-  }
+  }*/
 
   render() {
-    const { deckSummary, ready } = this.state;
-    console.log('ready', ready)
+    const { deckSummary, isReady } = this.props;
+    console.log('isReady', isReady)
     console.log('deckSummary ', deckSummary)
 
-    if(ready === false){
+    if(isReady === false){
       return <AppLoading />
     }
 
@@ -43,7 +43,7 @@ export default class DeckList extends Component {
         <DeckHeader title={'FlashCards'} colour={'purple'}/>
         {Object.keys(deckSummary).map((deck, index) =>
           <View style={styles.deck} key={index}>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('DeckDetail', {deck: getDeck(deck)})}>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('DeckDetail', { deck })}>
               <Text style={styles.decktitle}>{`${deck}`}</Text>
             </TouchableOpacity>
             <Text style={styles.textStyle}>{`${deckSummary[deck]} cards`}</Text>
@@ -53,6 +53,16 @@ export default class DeckList extends Component {
     )
   }
 }
+
+function mapStateToProps(state) {
+  console.log('state decklist', state.deckSummary)
+  return {
+    deckSummary: state.deckSummary,
+    isReady: state.isReady
+  }
+}
+
+export default connect(mapStateToProps)(DeckList)
 
 const styles = StyleSheet.create({
   decklist: {

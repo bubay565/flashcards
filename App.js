@@ -1,5 +1,10 @@
 import React, { Component } from 'react'
 import { View, StyleSheet, Text } from 'react-native'
+import { createStore, applyMiddleware } from 'redux'
+import { Provider } from 'react-redux'
+import thunk from 'redux-thunk'
+import { createLogger } from 'redux-logger'
+import reducer from './reducers'
 import DeckList from './components/DeckList'
 import DeckDetail from './components/DeckDetail'
 import Quiz from './components/Quiz'
@@ -7,6 +12,13 @@ import NewCard from './components/NewCard'
 import NewDeck from './components/NewDeck'
 import { StackNavigator, TabNavigator } from 'react-navigation'
 import { white, lightPurp } from './utils/colors'
+
+const logger = createLogger()
+
+const store = createStore(
+  reducer,
+  applyMiddleware(thunk, logger)
+)
 
 const MainScreenNavigator = TabNavigator({
   Decks: {
@@ -24,17 +36,6 @@ const MainScreenNavigator = TabNavigator({
     }
   }
 })
-
-
-export default class App extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Stacks />
-      </View>
-    );
-  }
-}
 
 const Stacks = StackNavigator({
   Home: {
@@ -69,3 +70,15 @@ const styles = StyleSheet.create({
     backgroundColor: white
   },
 });
+
+export default class App extends Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <View style={styles.container}>
+          <Stacks />
+        </View>
+      </Provider>
+    );
+  }
+}

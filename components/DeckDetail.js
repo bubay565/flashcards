@@ -1,24 +1,36 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { StyleSheet, Text, View } from 'react-native'
-import { getDeck } from '../utils/helpers'
+import { getDeck } from '../actions'
 import DeckHeader from './DeckHeader'
 import TextButton from './TextButton'
 import { purple, red, white, lightPurp, gray } from '../utils/colors'
 import { AppLoading } from 'expo'
 
-export default class DeckDetail extends Component{
+class DeckDetail extends Component{
+  componentDidMount(){
+    const { deck } = this.props.navigation.state.params;
+    this.props.dispatch(getDeck(deck));
+  }
+
   render(){
-    const { params } = this.props.navigation.state
+    const { deck, deckReady } = this.props
+    console.log('init props: ', this.props)
+
+    if(deckReady === false){
+      return <AppLoading />
+    }
+
     return (
       <View style={styles.deck}>
-        {console.log('props', params)}
-        {console.log('detail deck', params.deck)}
-        {console.log('detail deck title', params.deck.title)}
-        <DeckHeader title={params.deck.title} colour={'red'}/>
-        <Text style={styles.decktitle}>{`${params.deck.questions.length} cards`}</Text>
+        {console.log('props', this.props)}
+        {console.log('detail deck', deck)}
+        {console.log('detail deck title', deck.title)}
+        <DeckHeader title={deck.title} colour={'red'}/>
+        <Text style={styles.decktitle}>{`${deck.questions.length} cards`}</Text>
         <View>
-        <TextButton label={"Add Card"} onPress={() => this.props.navigation.navigate('NewCard', {deckTitle: params.deck.title})}/>
-        <TextButton label={"Start Quiz"} onPress={() => this.props.navigation.navigate('Quiz', {deckTitle: params.deck.title})}/>
+        <TextButton label={"Add Card"} onPress={() => this.props.navigation.navigate('NewCard', {deckTitle: deck.title})}/>
+        <TextButton label={"Start Quiz"} onPress={() => this.props.navigation.navigate('Quiz', {deck})}/>
         </View>
       </View>
     )
@@ -38,3 +50,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around'
   }
 });
+
+function mapStateToProps(state) {
+  console.log('state detail', state.deck)
+  return {
+    deck: state.deck,
+    deckReady: state.deckReady
+  }
+}
+
+export default connect(mapStateToProps)(DeckDetail)
