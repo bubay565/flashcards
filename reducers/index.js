@@ -1,13 +1,14 @@
 import {
   SET_INITIAL_APP_DATA,
-  FETCH_DECK_SUMMARY,
-  FETCH_DECK_DETAILS
+  FETCH_ALL_DECKS,
+  FETCH_DECK_DETAILS,
+  NEW_DECK_ADDED
 } from '../actions/actionTypes'
 
 const initialState = {
-  isReady: false,
+  appReady: false,
   deckReady: false,
-  deckSummary: {},
+  allDecks: {},
   deck: {},
   hasError: false,
   errorMessage: null
@@ -18,18 +19,26 @@ export default function CardReducer(state = initialState, action){
     case SET_INITIAL_APP_DATA:
       return state
 
-    case FETCH_DECK_SUMMARY:
+    case FETCH_ALL_DECKS:
       return {
         ...state,
-        isReady: true,
-        deckSummary: action.deckSummary
+        appReady: true,
+        allDecks: action.res
       }
+
     case FETCH_DECK_DETAILS:
       return {
         ...state,
         deckReady: true,
-        deck: action.deck
+        deck: action.res
       }
+
+    case NEW_DECK_ADDED:
+      return {
+        ...state,
+        allDecks: action.res
+      }
+
     default:
       return state
   }

@@ -64,33 +64,32 @@ export const initialiseAppData = async () => {
     console.log('done initialising data storage..');
 }
 
-export const getDecks = () => {
-  //AsyncStorage.getIt
-  return appData
-}
+export const getDecks = async () => (
+   JSON.parse( await AsyncStorage.getItem(DECK_STORAGE_KEY))
+)
 
 export const getDeck = async (deck) => {
   const data = JSON.parse( await AsyncStorage.getItem(DECK_STORAGE_KEY));
   return data.hasOwnProperty(deck) ? data[deck] : 'null'
 }
 
-export const saveDeckTitle = async (deck) => {
-  console.log('saving :', deck)
+export const createNewDeck = async (title) => {
+  console.log('saving :', title)
   await AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify({
-    [deck] : {
-      title: deck,
+    [title] : {
+      title,
       questions: []
     }
   }))
   console.log(JSON.parse( await AsyncStorage.getItem(DECK_STORAGE_KEY)))
+  return JSON.parse( await AsyncStorage.getItem(DECK_STORAGE_KEY))
 }
 
 export const addCardToDeck = (title, card) => {
   appData.title.questions.concat(card);
 }
 
-export const getDeckSummary = async () => {
-    const data = JSON.parse( await AsyncStorage.getItem(DECK_STORAGE_KEY));
+export const getDeckSummary = (data) => {
     let keys = Object.keys(data);
     let res = {};
     keys.forEach((key) => {

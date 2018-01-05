@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native'
-import { getDeckSummary, initialiseAppData } from '../actions'
+import { getDecks, initialiseAppData } from '../actions'
 import { gray, red, lightPurp, white } from '../utils/colors'
+import { getDeckSummary } from '../utils/helpers'
 import DeckHeader from './DeckHeader'
 import { AppLoading } from 'expo'
 
@@ -13,7 +14,7 @@ class DeckList extends Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(getDeckSummary());
+    this.props.dispatch(getDecks());
   }
 
   /*async componentDidMount(){
@@ -30,11 +31,12 @@ class DeckList extends Component {
   }*/
 
   render() {
-    const { deckSummary, isReady } = this.props;
-    console.log('isReady', isReady)
+    const { allDecks, appReady } = this.props;
+    const deckSummary = getDeckSummary(allDecks)
+    console.log('appReady', appReady)
     console.log('deckSummary ', deckSummary)
 
-    if(isReady === false){
+    if(appReady === false){
       return <AppLoading />
     }
 
@@ -57,8 +59,8 @@ class DeckList extends Component {
 function mapStateToProps(state) {
   console.log('state decklist', state.deckSummary)
   return {
-    deckSummary: state.deckSummary,
-    isReady: state.isReady
+    allDecks: state.allDecks,
+    appReady: state.appReady
   }
 }
 

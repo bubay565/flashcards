@@ -1,15 +1,16 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { View, Text, StyleSheet, TextInput, Button } from 'react-native'
-import { saveDeckTitle } from '../utils/helpers'
+import { addNewDeck } from '../actions'
 import { orange, gray, red } from '../utils/colors'
 
-export default class NewDeck extends Component{
+class NewDeck extends Component{
   state = {
     deckTitle : 'Enter Deck Title'
   }
 
-  addNewDeck = () => {
-    saveDeckTitle(this.state.deckTitle)
+  createNewDeck = () => {
+    this.props.dispatch(addNewDeck(this.state.deckTitle))
     this.setState({deckTitle : 'Enter Deck Title'})
     this.props.navigation.navigate('Decks')
   }
@@ -24,7 +25,7 @@ export default class NewDeck extends Component{
           value={this.state.deckTitle}
         />
         <Button
-          onPress={() => this.addNewDeck()}
+          onPress={() => this.createNewDeck()}
           title="Submit"
           color={orange}
         />
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
   },
   textInput : {
     height: 40,
-    width: 380,
+    width: 300,
     borderColor: 'gray',
     borderWidth: 1.5,
     borderRadius: 10
@@ -54,3 +55,5 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around'
   }
 });
+
+export default connect()(NewDeck)

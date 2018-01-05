@@ -60,13 +60,13 @@ export default class NewCard extends Component{
 const styles = StyleSheet.create({
   title: {
     color: red,
-    fontSize: 35,
+    fontSize: 30,
     fontWeight: 'bold',
     margin: 10
   },
   textInput : {
     minHeight: 40,
-    width: 380,
+    width: 300,
     borderColor: 'gray',
     borderWidth: 1.5,
     borderRadius: 10

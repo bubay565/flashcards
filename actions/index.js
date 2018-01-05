@@ -1,8 +1,9 @@
 import * as API from '../utils/helpers'
 import {
   SET_INITIAL_APP_DATA,
-  FETCH_DECK_SUMMARY,
-  FETCH_DECK_DETAILS
+  FETCH_ALL_DECKS,
+  FETCH_DECK_DETAILS,
+  NEW_DECK_ADDED
 } from './actionTypes'
 
 export function initialiseAppData() {
@@ -13,17 +14,23 @@ export function initialiseAppData() {
         type: SET_INITIAL_APP_DATA
       })
     })
+    .catch(err => {
+      console.log(err)
+    })
   }
 }
 
-export function getDeckSummary(){
+export function getDecks(){
   return dispatch => {
-    return API.getDeckSummary()
+    return API.getDecks()
     .then(res => {
       return dispatch({
-        type: FETCH_DECK_SUMMARY,
-        deckSummary: res
+        type: FETCH_ALL_DECKS,
+        res
       })
+    })
+    .catch(err => {
+      console.log(err)
     })
   }
 }
@@ -34,7 +41,22 @@ export function getDeck(deck){
     .then(res => {
       return dispatch({
         type: FETCH_DECK_DETAILS,
-        deck: res
+        res
+      })
+    })
+    .catch(err =>{
+      console.log(err);
+    })
+  }
+}
+
+export function addNewDeck(title){
+  return dispatch => {
+    API.createNewDeck(title)
+    .then(res => {
+      return dispatch({
+        type: NEW_DECK_ADDED,
+        res
       })
     })
     .catch(err =>{
