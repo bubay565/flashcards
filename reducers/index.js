@@ -24,6 +24,7 @@ export default function CardReducer(state = initialState, action){
       return {
         ...state,
         appReady: true,
+        deckReady: true,
         allDecks: action.res
       }
 
@@ -43,7 +44,7 @@ export default function CardReducer(state = initialState, action){
     case ADD_CARD_TO_DECK:
       return {
         ...state,
-        deck: action.res
+        allDecks: action.res
       }
 
     default:

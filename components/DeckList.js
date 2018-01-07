@@ -30,15 +30,13 @@ class DeckList extends Component {
     }
   }*/
 
-  componentDidUpdate(){
+  componentWilUpdate(){
     this.props.dispatch(getDecks())
   }
 
   render() {
     const { allDecks, appReady } = this.props;
     const deckSummary = getDeckSummary(allDecks)
-    console.log('appReady', appReady)
-    console.log('deckSummary ', deckSummary)
 
     if(appReady === false){
       return <AppLoading />
@@ -61,7 +59,6 @@ class DeckList extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log('state decklist', state.deckSummary)
   return {
     allDecks: state.allDecks,
     appReady: state.appReady

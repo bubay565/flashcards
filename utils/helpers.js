@@ -89,12 +89,12 @@ export const addCardToDeck = async (title, card) => {
   await AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify({
     [title]: deck
   }))
-  const updated = await getDeck(title)
+  const updated = await getDecks()
   return updated
 }
 
 export const getDeckSummary = (data) => {
-    let keys = Object.keys(data);
+    let keys = Object.keys(data).sort();
     let res = {};
     keys.forEach((key) => {
        res[key] = data[key].questions.length;
