@@ -74,19 +74,23 @@ export const getDeck = async (deck) => {
 }
 
 export const createNewDeck = async (title) => {
-  console.log('saving :', title)
   await AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify({
     [title] : {
       title,
       questions: []
     }
   }))
-  console.log(JSON.parse( await AsyncStorage.getItem(DECK_STORAGE_KEY)))
   return JSON.parse( await AsyncStorage.getItem(DECK_STORAGE_KEY))
 }
 
-export const addCardToDeck = (title, card) => {
-  appData.title.questions.concat(card);
+export const addCardToDeck = async (title, card) => {
+  const deck = await getDeck(title);
+  deck.questions.push(card);
+  await AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify({
+    [title]: deck
+  }))
+  const updated = await getDeck(title)
+  return updated
 }
 
 export const getDeckSummary = (data) => {
@@ -95,6 +99,5 @@ export const getDeckSummary = (data) => {
     keys.forEach((key) => {
        res[key] = data[key].questions.length;
      })
-     console.log('res: ', res)
     return res;
 }

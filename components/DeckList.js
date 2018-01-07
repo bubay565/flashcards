@@ -30,6 +30,10 @@ class DeckList extends Component {
     }
   }*/
 
+  componentDidUpdate(){
+    this.props.dispatch(getDecks())
+  }
+
   render() {
     const { allDecks, appReady } = this.props;
     const deckSummary = getDeckSummary(allDecks)

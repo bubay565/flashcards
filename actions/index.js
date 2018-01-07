@@ -3,7 +3,8 @@ import {
   SET_INITIAL_APP_DATA,
   FETCH_ALL_DECKS,
   FETCH_DECK_DETAILS,
-  NEW_DECK_ADDED
+  NEW_DECK_ADDED,
+  ADD_CARD_TO_DECK
 } from './actionTypes'
 
 export function initialiseAppData() {
@@ -59,7 +60,22 @@ export function addNewDeck(title){
         res
       })
     })
-    .catch(err =>{
+    .catch(err => {
+      console.log(err);
+    })
+  }
+}
+
+export function addCardToDeck(deck, card){
+  return dispatch => {
+    API.addCardToDeck(deck, card)
+    .then(res => {
+      return dispatch({
+        type: ADD_CARD_TO_DECK,
+        res
+      })
+    })
+    .catch(err => {
       console.log(err);
     })
   }

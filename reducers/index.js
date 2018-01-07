@@ -2,7 +2,8 @@ import {
   SET_INITIAL_APP_DATA,
   FETCH_ALL_DECKS,
   FETCH_DECK_DETAILS,
-  NEW_DECK_ADDED
+  NEW_DECK_ADDED,
+  ADD_CARD_TO_DECK
 } from '../actions/actionTypes'
 
 const initialState = {
@@ -37,6 +38,12 @@ export default function CardReducer(state = initialState, action){
       return {
         ...state,
         allDecks: action.res
+      }
+
+    case ADD_CARD_TO_DECK:
+      return {
+        ...state,
+        deck: action.res
       }
 
     default:
